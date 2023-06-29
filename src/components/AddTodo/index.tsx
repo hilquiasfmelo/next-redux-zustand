@@ -1,20 +1,30 @@
 'use client'
 
+import { useDispatch } from 'react-redux'
 import { FormEvent, useState } from 'react'
+
+import { add } from '@/store'
 
 export function AddTodo() {
   const [newTodo, setNewTodo] = useState('')
+  const dispatch = useDispatch()
 
   function handleNewTodo(event: FormEvent) {
     event.preventDefault()
 
-    console.log(newTodo)
+    dispatch(
+      add({
+        newTodo,
+      }),
+    )
+
+    setNewTodo('')
   }
 
   return (
     <form
       onSubmit={handleNewTodo}
-      className="w-64 flex flex-col items-center justify-center gap-3"
+      className="flex flex-col items-center justify-center gap-3"
     >
       <input
         type="text"

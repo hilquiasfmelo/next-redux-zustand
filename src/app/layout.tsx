@@ -1,8 +1,7 @@
 import React from 'react'
 import { Inter } from 'next/font/google'
-import { Provider as ReduxProvider } from 'react-redux'
 
-import { store } from '@/store'
+import { ReduxProvider } from '@/redux/provider'
 
 import './globals.css'
 
@@ -21,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ReduxProvider store={store}>{children}</ReduxProvider>
+        <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
   )
