@@ -5,15 +5,25 @@ import { MessageCircle } from 'lucide-react'
 import { Header } from '../Header'
 import { Video } from '../Video'
 import { Module } from '../Module'
+import { useAppSelector } from '@/store'
+import { useCurrentLesson } from '@/store/slices/player'
+import { useEffect } from 'react'
 
 export function Player() {
+  const modules = useAppSelector((state) => {
+    return state.player.course.modules
+  })
+
+  const { currentLesson } = useCurrentLesson()
+
+  useEffect(() => {
+    document.title = `Assistindo: ${currentLesson.title}`
+  }, [currentLesson])
+
   return (
     <div className="flex w-[1200px] flex-col gap-6">
       <div className="flex items-center justify-between">
-        <Header
-          title="Fundamentos do Redux"
-          subtitle='Módulo "Desvendando o Redux"'
-        />
+        <Header />
 
         <button className="flex items-center gap-2 rounded bg-orange-500 px-3 py-2 text-sm font-medium text-white hover:bg-orange-600">
           <MessageCircle className="h-4 w-4" />
@@ -27,21 +37,16 @@ export function Player() {
         </div>
 
         <aside className="absolute bottom-0 right-0 top-0 w-80 divide-y-2 divide-sky-900 overflow-y-scroll border-l border-sky-800 bg-sky-900 scrollbar-thin scrollbar-track-sky-950 scrollbar-thumb-sky-800">
-          <Module
-            moduleIndex={0}
-            title="Desvendando o Redux"
-            amountOfLessons={10}
-          />
-          <Module
-            moduleIndex={1}
-            title="Desvendando o Redux"
-            amountOfLessons={10}
-          />
-          <Module
-            moduleIndex={2}
-            title="Desvendando o Redux"
-            amountOfLessons={10}
-          />
+          {modules.map((module, index) => {
+            return (
+              <Module
+                key={module.id}
+                moduleIndex={index}
+                title={module.title}
+                amountOfLessons={module.lessons.length}
+              />
+            )
+          })}
         </aside>
       </main>
     </div>

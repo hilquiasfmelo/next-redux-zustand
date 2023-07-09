@@ -1,10 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 
+import { player } from './slices/player'
+
 export const store = configureStore({
   // Aqui onde ficará todas as informações que serão compartilhadas, que são as fatias do estado
   reducer: {
     // todo => Nome do reducer definido pelo programador
+    player,
   },
 })
 
